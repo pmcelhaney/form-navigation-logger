@@ -10,7 +10,17 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>    
   <script type="text/javascript" charset="utf-8">
     $(function () {
-       $('#loginForm input').bind('click keyup', (function () { console.log(event.type, this.name, event) } )); 
+      var keyboardEventAsString = function (e) {
+				var keyCode = e.keyCode || e.which; 
+				  if (keyCode == 9) { 
+							return "TAB";
+				  }    
+				  if (keyCode == 13 || keyCode == 10) { 
+								return "ENTER";
+					  }
+				  return keyCode;
+			} 
+			$('#loginForm input').bind('click keyup', (function () { console.log(event.type, this.name, keyboardEventAsString(event)); return false; } )); 
     }); 
   </script>
 </head>
