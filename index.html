@@ -30,16 +30,22 @@
 			
 			var logEventIfInteresting = function (type, name) {
 				if ("TAB" == type || "ENTER" == type || "click" == type || "focus" == type || "SPACE" == type && "login" == name) {
-					console.log(type, name);          
+					var logInputField = $('#log').get(0);
+					logInputField.value += (logInputField.value ? ', ' : '')  + type + ' ' + name;          
 				}
-			}
+			}                        
+			
+			
 			$('#loginForm input').bind('click keydown focus', (function (e) { logEventOnItem(e, this.name); } )); 
     }); 
   </script>
 </head>
 <body>  
+
+ 		<input type="text" name="log" value="" id="log" size="200"> 
 	
-	<form id="loginForm" onSubmit="return false;">
+	<form id="loginForm" onSubmit="return false;">  
+
 	  <input type="text" name="username" value="" id="username">   
 	  <input type="text" name="password" value="" id="password">
 	  <input type="checkbox" name="remember" value="" id="remember">
