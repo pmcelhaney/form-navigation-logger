@@ -19,14 +19,24 @@
 								return "ENTER";
 					  }
 				  return keyCode;
-			} 
-			$('#loginForm input').bind('click keyup', (function () { console.log(event.type, this.name, keyboardEventAsString(event)); return false; } )); 
+			}                                     
+			
+			var logEventOnItem = function (e, name) {
+				logEventIfInteresting(e.type == 'keydown' ? keyboardEventAsString(event) : e.type, name)
+			}               
+			
+			var logEventIfInteresting = function (type, name) {
+				if ("TAB" == type || "ENTER" == type || "keydown" == type || "focus" == type) {
+					console.log(type, name);          
+				}
+			}
+			$('#loginForm input').bind('click keydown focus', (function (e) { logEventOnItem(e, this.name); } )); 
     }); 
   </script>
 </head>
 <body>  
 	
-	<form id="loginForm">
+	<form id="loginForm" onSubmit="return false;">
 	  <input type="text" name="username" value="" id="username">   
 	  <input type="text" name="password" value="" id="password">
 	  <input type="checkbox" name="remember" value="" id="remember">
