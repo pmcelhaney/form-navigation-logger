@@ -17,7 +17,10 @@
 				  }    
 				  if (keyCode == 13 || keyCode == 10) { 
 								return "ENTER";
-					  }
+					}           
+					if (keyCode == 32) { 
+								return "SPACE";
+					}
 				  return keyCode;
 			}                                     
 			
@@ -26,7 +29,7 @@
 			}               
 			
 			var logEventIfInteresting = function (type, name) {
-				if ("TAB" == type || "ENTER" == type || "click" == type || "focus" == type) {
+				if ("TAB" == type || "ENTER" == type || "click" == type || "focus" == type || "SPACE" == type && "login" == name) {
 					console.log(type, name);          
 				}
 			}
