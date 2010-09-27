@@ -22,11 +22,11 @@
           return keyCode;
       };                                     
       
-      var logEventOnItem = function (e, name) {
-        logEventIfInteresting(e.type == 'keydown' ? keyboardEventAsString(event) : e.type, name)
-      };               
+             
       
-      var logEventIfInteresting = function (type, name) {
+      var logEventOnItem = function (e, element) {
+        var name = element.name;
+        var type = (e.type == 'keydown' ? keyboardEventAsString(event) : e.type)
         if (isEventInteresting(type, name)) {
           var logInputField = $('#log').get(0);
           logInputField.value += (logInputField.value ? ', ' : '')  + type + ' ' + name;          
@@ -37,7 +37,7 @@
         return "TAB" == type || "ENTER" == type || "click" == type || "focus" == type || "SPACE" == type && "login" == name
       }
       
-      $('#loginForm input').bind('click keydown focus', (function (e) { logEventOnItem(e, this.name); } )); 
+      $('#loginForm input').bind('click keydown focus', (function (e) { logEventOnItem(e, this); } )); 
     }); 
   </script>
 </head>
