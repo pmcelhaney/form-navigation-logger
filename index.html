@@ -28,16 +28,16 @@
         var element = evt.target;
         var name = element.name;
         var type = (evt.type == 'keydown' ? keyboardEventAsString(evt) : evt.type)
-        if (isEventInteresting(evt)) {
+        if (isEventTypeInterestingForElement(type, element)) {
           var logInputField = $('#log').get(0);
           logInputField.value += (logInputField.value ? ', ' : '')  + type + ' ' + name;          
         }
       };                        
          
-      var isEventInteresting = function (evt) { 
-        var type = evt.type;
-        var name = evt.target.name;
-        return "TAB" == type || "ENTER" == type || "click" == type || "focus" == type || "SPACE" == type && "login" == name
+      var isEventTypeInterestingForElement= function (type, element) { 
+        if ("TAB" == type || "ENTER" == type || "click" == type || "focus" == type) return true;
+        if ("SPACE" == type && "submit" == element.type) return true; 
+        return false;
       }
       
       $('#loginForm input').bind('click keydown focus', (function (evt) { logEventOnItem(evt, this); } )); 
