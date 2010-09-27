@@ -3,55 +3,55 @@
 
 <html lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>untitled</title>
-	<meta name="author" content="Patrick McElhaney">
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Form Navigation Logger</title>
+  <meta name="author" content="Patrick McElhaney">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>    
   <script type="text/javascript" charset="utf-8">
     $(function () {
       var keyboardEventAsString = function (e) {
-				var keyCode = e.keyCode || e.which; 
-				  if (keyCode == 9) { 
-							return "TAB";
-				  }    
-				  if (keyCode == 13 || keyCode == 10) { 
-								return "ENTER";
-					}           
-					if (keyCode == 32) { 
-								return "SPACE";
-					}
-				  return keyCode;
-			}                                     
-			
-			var logEventOnItem = function (e, name) {
-				logEventIfInteresting(e.type == 'keydown' ? keyboardEventAsString(event) : e.type, name)
-			}               
-			
-			var logEventIfInteresting = function (type, name) {
-				if ("TAB" == type || "ENTER" == type || "click" == type || "focus" == type || "SPACE" == type && "login" == name) {
-					var logInputField = $('#log').get(0);
-					logInputField.value += (logInputField.value ? ', ' : '')  + type + ' ' + name;          
-				}
-			}                        
-			
-			
-			$('#loginForm input').bind('click keydown focus', (function (e) { logEventOnItem(e, this.name); } )); 
+        var keyCode = e.keyCode || e.which; 
+          if (keyCode == 9) { 
+              return "TAB";
+          }    
+          if (keyCode == 13 || keyCode == 10) { 
+                return "ENTER";
+          }           
+          if (keyCode == 32) { 
+                return "SPACE";
+          }
+          return keyCode;
+      }                                     
+      
+      var logEventOnItem = function (e, name) {
+        logEventIfInteresting(e.type == 'keydown' ? keyboardEventAsString(event) : e.type, name)
+      }               
+      
+      var logEventIfInteresting = function (type, name) {
+        if ("TAB" == type || "ENTER" == type || "click" == type || "focus" == type || "SPACE" == type && "login" == name) {
+          var logInputField = $('#log').get(0);
+          logInputField.value += (logInputField.value ? ', ' : '')  + type + ' ' + name;          
+        }
+      }                        
+      
+      
+      $('#loginForm input').bind('click keydown focus', (function (e) { logEventOnItem(e, this.name); } )); 
     }); 
   </script>
 </head>
 <body>  
 
- 		
-	
-	<form id="loginForm" onSubmit="return false;">  
+     
+  
+  <form id="loginForm" onSubmit="return false;">  
                   
-		<input type="hidden" name="log" value="" id="log"> 
-	  <input type="text" name="username" value="" id="username">   
-	  <input type="text" name="password" value="" id="password">
-	  <input type="checkbox" name="remember" value="" id="remember">
-	  <input type="submit" name="login" value="Log In" id="login">           
-	</form>
+    <input type="hidden" name="log" value="" id="log"> 
+    <input type="text" name="username" value="" id="username">   
+    <input type="text" name="password" value="" id="password">
+    <input type="checkbox" name="remember" value="" id="remember">
+    <input type="submit" name="login" value="Log In" id="login">           
+  </form>
 
 </body>
 </html>
