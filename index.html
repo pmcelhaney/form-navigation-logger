@@ -24,16 +24,19 @@
       
              
       
-      var logEventOnItem = function (evt, element) {
+      var logEventOnItem = function (evt) {
+        var element = evt.target;
         var name = element.name;
         var type = (evt.type == 'keydown' ? keyboardEventAsString(evt) : evt.type)
-        if (isEventInteresting(type, name)) {
+        if (isEventInteresting(evt)) {
           var logInputField = $('#log').get(0);
           logInputField.value += (logInputField.value ? ', ' : '')  + type + ' ' + name;          
         }
       };                        
          
-      var isEventInteresting = function (type, name) { 
+      var isEventInteresting = function (evt) { 
+        var type = evt.type;
+        var name = evt.target.name;
         return "TAB" == type || "ENTER" == type || "click" == type || "focus" == type || "SPACE" == type && "login" == name
       }
       
