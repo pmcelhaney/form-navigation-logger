@@ -20,19 +20,22 @@
                 return "SPACE";
           }
           return keyCode;
-      }                                     
+      };                                     
       
       var logEventOnItem = function (e, name) {
         logEventIfInteresting(e.type == 'keydown' ? keyboardEventAsString(event) : e.type, name)
-      }               
+      };               
       
       var logEventIfInteresting = function (type, name) {
-        if ("TAB" == type || "ENTER" == type || "click" == type || "focus" == type || "SPACE" == type && "login" == name) {
+        if (isEventInteresting(type, name)) {
           var logInputField = $('#log').get(0);
           logInputField.value += (logInputField.value ? ', ' : '')  + type + ' ' + name;          
         }
-      }                        
-      
+      };                        
+         
+      var isEventInteresting = function (type, name) { 
+        return "TAB" == type || "ENTER" == type || "click" == type || "focus" == type || "SPACE" == type && "login" == name
+      }
       
       $('#loginForm input').bind('click keydown focus', (function (e) { logEventOnItem(e, this.name); } )); 
     }); 
