@@ -36,11 +36,11 @@
          
       var isEventTypeInterestingForElement= function (type, element) { 
         if ("TAB" == type || "ENTER" == type || "click" == type || "focus" == type) return true;
-        if ("SPACE" == type && "submit" == element.type) return true; 
+        if ("SPACE" == type && ("submit" == element.type || "checkbox" == element.type || "button" == element.type)) return true; 
         return false;
       }
       
-      $('#loginForm input').bind('click keydown focus', (function (evt) { logEventOnItem(evt, this); } )); 
+      $('#loginForm input').bind('click keydown focus', (function (evt) { logEventOnItem(evt); } )); 
     }); 
   </script>
 </head>
