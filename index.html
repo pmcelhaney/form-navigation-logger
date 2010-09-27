@@ -8,39 +8,29 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script type="text/javascript" charset="utf-8">
     $(function () {
-      var keyboardEventAsString = function (e) {
-        var keyCode = e.keyCode || e.which; 
-          if (keyCode == 9) { 
-              return "TAB";
-          }    
-          if (keyCode == 13 || keyCode == 10) { 
-                return "ENTER";
-          }           
-          if (keyCode == 32) { 
-                return "SPACE";
-          }
-          return keyCode;
-      };                                     
-      
-             
-      
-      var logEventOnItem = function (evt) {
-        var element = evt.target;
-        var name = element.name;
-        var type = (evt.type == 'keydown' ? keyboardEventAsString(evt) : evt.type)
-        if (isEventTypeInterestingForElement(type, element)) {
-          var logInputField = $('#log').get(0);
-          logInputField.value += (logInputField.value ? ', ' : '')  + type + ' ' + name;          
-        }
-      };                        
-         
-      var isEventTypeInterestingForElement= function (type, element) { 
-        if ("TAB" == type || "ENTER" == type || "click" == type || "focus" == type) return true;
-        if ("SPACE" == type && ("submit" == element.type || "checkbox" == element.type || "button" == element.type)) return true; 
-        return false;
+                                  
+      var logInputField = $('#log').get(0);
+        
+      var recordInput = function (e) {
+        logInputField.value += (logInputField.value ? ', ' : '')  + e.type + ' ' + this.id;
       }
+                    
+      $('#loginForm input').bind('keydown', function(e) { 
+        var keyNames = {
+          9: "TAB"    
+          , 13: "ENTER"
+          , 32: "SPACE"
+        };
+        var nameOfKey = keyNames[e.which];
+        if (nameOfKey) { 
+            $(this).trigger(nameOfKey);
+        };
+      });
       
-      $('#loginForm input').bind('click keydown focus', (function (evt) { logEventOnItem(evt); } )); 
+      
+     $('input', '#loginForm').bind('TAB ENTER click', recordInput);
+     $('input[type=checkbox], input[type=button], input[type=submit]', '#loginForm').bind('SPACE', recordInput);
+      
     }); 
   </script>
 </head>
@@ -48,7 +38,7 @@
 
      
   
-  <form id="loginForm" onSubmit="return false;">  
+  <form id="loginForm" onSubmit="alert('submit'); return false;">  
                   
     <input type="hidden" name="log" value="" id="log"> 
     <input type="text" name="username" value="" id="username">   
